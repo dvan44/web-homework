@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom'
 import AppRouter from './routes'
 import { ApolloProvider } from '@apollo/client'
 import { client } from './network/apollo-client'
+import { styles } from './theme/styles'
 
 ReactDOM.render(
   (
-    <div data-app-init=''>
+    <div css={styles} data-app-init=''>
       <ApolloProvider client={client}>
         <AppRouter />
       </ApolloProvider>
