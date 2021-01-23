@@ -11,6 +11,8 @@ const styles = css`
   padding: 8px 16px;
   border: none;
   cursor: pointer;
+  font-size: 16px;
+  width: 100%;
 
   &:hover {
     opacity: 0.8;
@@ -25,14 +27,18 @@ const styles = css`
   &.danger {
     background: ${COLORS.danger};
   }
+  &.grey {
+    background: ${COLORS.grey}
+  }
 `
 
 export function Button (props) {
   return (
     <button
-      className={props.type}
+      className={props.color}
       css={styles}
       onClick={props.clickHandler}
+      type={props.type || 'button'}
     >
       {props.text}
     </button>
@@ -41,6 +47,7 @@ export function Button (props) {
 
 Button.propTypes = {
   clickHandler: func,
+  color: string,
   text: string,
   type: string
 }

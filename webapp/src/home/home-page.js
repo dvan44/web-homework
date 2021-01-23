@@ -29,8 +29,8 @@ export function Home (props) {
     <Fragment>
       <Button
         clickHandler={handleEnterClicked}
+        color='secondary'
         text='Enter New Transaction'
-        type='secondary'
       />
       <TxTable data={data.transactions} />
     </Fragment>
