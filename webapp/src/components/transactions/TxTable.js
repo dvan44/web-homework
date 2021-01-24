@@ -7,7 +7,6 @@ const styles = css`
   width: 100%;
 
   .header {
-    // font-weight: bold;
     background: ${COLORS.darkGray};
     color: white;
 

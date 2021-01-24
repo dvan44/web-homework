@@ -13,7 +13,7 @@ const styles = css`
 
 export function Enter (props) {
   const returnToHome = () => props.history.push('')
-  
+
   // TODO: Remove after confirming the results are not needed
   // const [createTx, { data }] = useMutation(CreateTransaction)
   const [createTx] = useMutation(CreateTransaction)
