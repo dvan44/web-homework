@@ -37,11 +37,19 @@ const dataStyles = css`
   .text-center {
     text-align: center;
   }
+
+  .tx-action-btns {
+    display: flex;
+
+    button:last-child {
+      margin-left: 8px;
+    }
+  }
 `
 
 const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionId}-${fieldName}`
 
-export function TxTable ({ data, deleteTxHandler }) {
+export function TxTable ({ data, deleteTxHandler, updateTxHandler }) {
   return (
     <table css={styles}>
       <tbody>
@@ -59,6 +67,8 @@ export function TxTable ({ data, deleteTxHandler }) {
           data.map((tx, index) => {
             const { id, user_id: userId, description, merchant_id: merchantId, debit, credit, amount } = tx
             const deleteTx = () => deleteTxHandler(id)
+            const updateTx = () => updateTxHandler(id)
+
             return (
               <tr
                 className={index % 2 === 0 ? '' : 'row-highlight'}
@@ -73,7 +83,10 @@ export function TxTable ({ data, deleteTxHandler }) {
                 <td className='text-center' data-testid={makeDataTestId(id, 'debit')}>{debit ? 'X' : ''}</td>
                 <td className='text-center' data-testid={makeDataTestId(id, 'credit')}>{credit ? 'X' : ''}</td>
                 <td data-testid={makeDataTestId(id, 'amount')}>${(amount / 100).toFixed(2)}</td>
-                <td><Button clickHandler={deleteTx} color='danger' text='X' /></td>
+                <td className='tx-action-btns'>
+                  <Button clickHandler={updateTx} color='grey' text='U' />
+                  <Button clickHandler={deleteTx} color='danger' text='X' />
+                </td>
               </tr>
             )
           })
@@ -94,5 +107,6 @@ TxTable.propTypes = {
     credit: bool,
     amount: number
   })),
-  deleteTxHandler: func
+  deleteTxHandler: func,
+  updateTxHandler: func
 }

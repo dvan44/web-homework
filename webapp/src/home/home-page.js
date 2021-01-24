@@ -41,6 +41,9 @@ export function Home (props) {
       })
     }
   }
+  const updateTxHandler = (id) => {
+    props.history.push(`/update/${id}`)
+  }
 
   if (loading) {
     return (
@@ -69,7 +72,11 @@ export function Home (props) {
             text='Enter New Transaction'
           />
         </div>
-        <TxTable data={data.transactions} deleteTxHandler={deleteTxHandler} />
+        <TxTable
+          data={data.transactions}
+          deleteTxHandler={deleteTxHandler}
+          updateTxHandler={updateTxHandler}
+        />
       </div>
     </Fragment>
   )
