@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
-import { useQuery } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import GetTransactions from '../gql/transactions.gql'
+import DeleteTransaction from '../gql/delete-transaction.gql'
 import { TxTable } from '../components/transactions/TxTable'
 import { Button } from '../components/button/Button'
 import { any } from 'prop-types'
@@ -26,8 +27,20 @@ const pageStyles = css`
 `
 
 export function Home (props) {
+  // Graph operations
   const { loading, error, data = {} } = useQuery(GetTransactions)
+  const [deleteTx] = useMutation(DeleteTransaction)
+
+  // Click event handlers
   const handleEnterClicked = () => props.history.push('/enter')
+  const deleteTxHandler = (id) => {
+    if (window.confirm(`Are you sure you want to delete transaction ${id}`)) {
+      deleteTx({ variables: { id } }).then(() => {
+        // TODO: Replace this by refreshing the data via Apollo rather than full page reload
+        window.location.reload()
+      })
+    }
+  }
 
   if (loading) {
     return (
@@ -56,7 +69,7 @@ export function Home (props) {
             text='Enter New Transaction'
           />
         </div>
-        <TxTable data={data.transactions} />
+        <TxTable data={data.transactions} deleteTxHandler={deleteTxHandler} />
       </div>
     </Fragment>
   )

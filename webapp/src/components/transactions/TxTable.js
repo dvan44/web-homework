@@ -1,7 +1,8 @@
 import React from 'react'
-import { arrayOf, string, bool, number, shape } from 'prop-types'
+import { arrayOf, string, bool, number, shape, func } from 'prop-types'
 import { css } from '@emotion/core'
 import { COLORS } from '../../theme/colors'
+import { Button } from '../button/Button'
 
 const styles = css`
   width: 100%;
@@ -40,7 +41,7 @@ const dataStyles = css`
 
 const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionId}-${fieldName}`
 
-export function TxTable ({ data }) {
+export function TxTable ({ data, deleteTxHandler }) {
   return (
     <table css={styles}>
       <tbody>
@@ -52,10 +53,12 @@ export function TxTable ({ data }) {
           <td >Debit</td>
           <td >Credit</td>
           <td >Amount</td>
+          <td />
         </tr>
         {
           data.map((tx, index) => {
             const { id, user_id: userId, description, merchant_id: merchantId, debit, credit, amount } = tx
+            const deleteTx = () => deleteTxHandler(id)
             return (
               <tr
                 className={index % 2 === 0 ? '' : 'row-highlight'}
@@ -70,6 +73,7 @@ export function TxTable ({ data }) {
                 <td className='text-center' data-testid={makeDataTestId(id, 'debit')}>{debit ? 'X' : ''}</td>
                 <td className='text-center' data-testid={makeDataTestId(id, 'credit')}>{credit ? 'X' : ''}</td>
                 <td data-testid={makeDataTestId(id, 'amount')}>${(amount / 100).toFixed(2)}</td>
+                <td><Button clickHandler={deleteTx} color='danger' text='X' /></td>
               </tr>
             )
           })
@@ -89,5 +93,6 @@ TxTable.propTypes = {
     debit: bool,
     credit: bool,
     amount: number
-  }))
+  })),
+  deleteTxHandler: func
 }
