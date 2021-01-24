@@ -55,9 +55,12 @@ export function TxForm ({ cancelHandler, submitHandler }) {
   const onSubmit = e => {
     e.preventDefault()
     submitHandler({
+      amount: Math.floor(amount * 100),
+      credit: type === 'Credit',
+      debit: type === 'Debit',
       description,
-      amount,
-      type
+      merchantId: '871b17b4-5dd8-11eb-ae93-0242ac130002',
+      userId: '3464c182-5dd8-11eb-ae93-0242ac130002'
     })
   }
 
@@ -89,7 +92,7 @@ export function TxForm ({ cancelHandler, submitHandler }) {
               className='form-control'
               onChange={e => setAmount(e.target.value)}
               pattern='^\d+\.\d{2}$'
-              placeholder='0.00'
+              placeholder='0'
               required
               type='text'
               value={amount}

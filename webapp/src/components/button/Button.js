@@ -24,6 +24,9 @@ const styles = css`
   &.secondary {
     background: ${COLORS.secondary};
   }
+  &.tertiary {
+    background: ${COLORS.tertiary};
+  }
   &.danger {
     background: ${COLORS.danger};
   }

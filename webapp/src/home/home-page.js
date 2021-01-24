@@ -4,6 +4,26 @@ import GetTransactions from '../gql/transactions.gql'
 import { TxTable } from '../components/transactions/TxTable'
 import { Button } from '../components/button/Button'
 import { any } from 'prop-types'
+import { css } from '@emotion/core'
+
+const styles = css`
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 32px;
+
+  .title {
+    font-weight: bold;
+    font-size: 32px;
+  }
+
+  button {
+    max-width: 200px;
+  }
+`
+
+const pageStyles = css`
+  padding: 0 32px;
+`
 
 export function Home (props) {
   const { loading, error, data = {} } = useQuery(GetTransactions)
@@ -27,12 +47,17 @@ export function Home (props) {
 
   return (
     <Fragment>
-      <Button
-        clickHandler={handleEnterClicked}
-        color='secondary'
-        text='Enter New Transaction'
-      />
-      <TxTable data={data.transactions} />
+      <div css={pageStyles}>
+        <div css={styles}>
+          <div className='title'>Transactions</div>
+          <Button
+            clickHandler={handleEnterClicked}
+            color='tertiary'
+            text='Enter New Transaction'
+          />
+        </div>
+        <TxTable data={data.transactions} />
+      </div>
     </Fragment>
   )
 }
