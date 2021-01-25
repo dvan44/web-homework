@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { TxForm } from '../components/transactions/TxForm'
 import { css } from '@emotion/core'
 import { any } from 'prop-types'
-import { useMutation } from '@apollo/client'
+import { useMutation, useQuery } from '@apollo/client'
 import UpdateTransaction from '../gql/update-transaction.gql'
+import GetTransactions from '../gql/transactions.gql'
 
 const styles = css`
   margin: auto;
@@ -12,13 +13,15 @@ const styles = css`
 `
 
 export function Update (props) {
-  const returnToHome = () => props.history.push('')
-
+  // Graph operations
+  const { loading, error, data = {} } = useQuery(GetTransactions)
   const [updateTx] = useMutation(UpdateTransaction)
+
+  const returnToHome = () => props.history.push('')
 
   const submitHandler = (transaction) => {
     updateTx({
-      variables: { ...transaction } // TODO: Add id of tx being update
+      variables: { ...transaction }
     }).then(() => {
       returnToHome()
     })
@@ -28,16 +31,40 @@ export function Update (props) {
     returnToHome()
   }
 
+  if (loading) {
+    return (
+      <Fragment>
+        Loading...
+      </Fragment>
+    )
+  }
+
+  if (error) {
+    return (
+      <Fragment>
+        Sorry, something went wrong. Please refresh the page to try again.
+      </Fragment>
+    )
+  }
+
+  const pathnameParts = props.location.pathname.split('/')
+  const txId = pathnameParts[pathnameParts.length - 1]
+  const txToUpdate = data.transactions.find(tx => tx.id === txId)
+
   return (
-    <div css={styles}>
-      <TxForm
-        cancelHandler={cancelHandler}
-        submitHandler={submitHandler}
-      />
-    </div>
+    <Fragment>
+      <div css={styles}>
+        <TxForm
+          cancelHandler={cancelHandler}
+          submitHandler={submitHandler}
+          tx={txToUpdate}
+        />
+      </div>
+    </Fragment>
   )
 }
 
 Update.propTypes = {
-  history: any
+  history: any,
+  location: any
 }

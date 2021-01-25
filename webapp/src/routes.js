@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import { css } from '@emotion/core'
 import { Home } from './home'
 import { Enter } from './enter'
+import { Update } from './update'
 
 function AppRouter () {
   return (
@@ -18,10 +19,13 @@ function AppRouter () {
             </li>
           </ul>
         </nav>
+        {/* <div className='banner' />
+        <div className='phase1' style={{ backgroundImage: 'url(' + require('./assets/background.svg') + ')' }} /> */}
         <div className='main-content' css={contentStyle}>
           <Route component={Home} exact path='/' />
           <Route component={() => (<div>Content for /another route</div>)} exact path='/another' />
           <Route component={Enter} exact path='/enter' />
+          <Route component={Update} path='/update/:id' />
         </div>
       </div>
     </Router>
@@ -34,6 +38,12 @@ const layoutStyle = css`
     display: grid;
     grid-row-gap: 24px;
     padding: 8px;
+
+    // .banner {
+    //   background-image: url('/assets/background.svg');
+    //   height: 400px;
+    //   width: 100%;
+    // }
 `
 
 const navStyle = css`
