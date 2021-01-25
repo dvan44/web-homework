@@ -5,6 +5,7 @@ import { COLORS } from '../../theme/colors'
 import EditSvg from '../../assets/edit.svg'
 import DeleteSvg from '../../assets/delete.svg'
 import { TxType } from '../transactions/transaction-type'
+import { Num } from '../num/Num'
 
 const styles = css`
   width: 100%;
@@ -104,7 +105,10 @@ export function TxTable ({ data, deleteTxHandler, updateTxHandler }) {
                 <td className='truncate' data-testid={makeDataTestId(id, 'merchant')}>{merchantId}</td>
                 <td className='text-center' data-testid={makeDataTestId(id, 'debit')}>{debit ? (<span>&#10003;</span>) : ''}</td>
                 <td className='text-center' data-testid={makeDataTestId(id, 'credit')}>{credit ? (<span>&#10003;</span>) : ''}</td>
-                <td data-testid={makeDataTestId(id, 'amount')}>${(amount / 100).toFixed(2)}</td>
+                <td data-testid={makeDataTestId(id, 'amount')}>
+                  <span>$</span>
+                  <Num number={(amount / 100).toFixed(2)} />
+                </td>
                 <td className='tx-action-btns'>
                   <button onClick={updateTx}>
                     <img alt='update transaction' src={EditSvg} />
@@ -119,7 +123,6 @@ export function TxTable ({ data, deleteTxHandler, updateTxHandler }) {
         }
       </tbody>
     </table>
-
   )
 }
 
