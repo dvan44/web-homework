@@ -108,10 +108,12 @@ export function TxForm ({ cancelHandler, submitHandler }) {
             <select
               className='form-control'
               onBlur={e => setType(e.target.value)}
+              required
               value={type}
             >
-              <option>Credit</option>
-              <option>Debit</option>
+              <option disabled selected value=''>Transaction Type</option>
+              <option value='Credit'>Credit</option>
+              <option value='Debit'>Debit</option>
             </select>
           </div>
         </label>

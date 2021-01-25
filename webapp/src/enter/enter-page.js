@@ -4,6 +4,7 @@ import { css } from '@emotion/core'
 import { any } from 'prop-types'
 import { useMutation } from '@apollo/client'
 import CreateTransaction from '../gql/create-transaction.gql'
+import TxFragment from '../gql/transaction-fragment.gql'
 
 const styles = css`
   margin: auto;
@@ -16,7 +17,22 @@ export function Enter (props) {
 
   // TODO: Remove after confirming the results are not needed
   // const [createTx, { data }] = useMutation(CreateTransaction)
-  const [createTx] = useMutation(CreateTransaction)
+  const [createTx] = useMutation(CreateTransaction, {
+    // Update cache after successful creation
+    update (cache, { data: { createTransaction } }) {
+      cache.modify({
+        fields: {
+          transactions (existingTxs = []) {
+            const newTx = cache.writeFragment({
+              data: createTransaction,
+              fragment: TxFragment
+            })
+            return [...existingTxs, newTx]
+          }
+        }
+      })
+    }
+  })
 
   const submitHandler = (transaction) => {
     createTx({ variables: { ...transaction } }).then(() => {

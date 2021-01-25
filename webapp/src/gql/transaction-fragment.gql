@@ -1,0 +1,9 @@
+fragment TxFragment on Transaction {
+    amount
+    credit
+    debit
+    description
+    id
+    merchant_id
+    user_id
+}
