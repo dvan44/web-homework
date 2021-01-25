@@ -2,18 +2,19 @@ import React from 'react'
 import { arrayOf, string, bool, number, shape, func } from 'prop-types'
 import { css } from '@emotion/core'
 import { COLORS } from '../../theme/colors'
-import { Button } from '../button/Button'
+import EditSvg from '../../assets/edit.svg'
+import DeleteSvg from '../../assets/delete.svg'
 
 const styles = css`
   width: 100%;
 
   .header {
     background: ${COLORS.darkGray};
-    color: white;
 
     td {
       padding: 5px;
       text-align: center;
+      color: white;
     }
   }
 
@@ -40,9 +41,20 @@ const dataStyles = css`
 
   .tx-action-btns {
     display: flex;
+    justify-content: space-around;
 
-    button:last-child {
-      margin-left: 8px;
+    button {
+      background: none;
+      border: none;
+
+      &:hover {
+        opacity: 0.6;
+        cursor: pointer;
+      }
+
+      &:focus {
+        outline: none;
+      }
     }
   }
 `
@@ -61,7 +73,7 @@ export function TxTable ({ data, deleteTxHandler, updateTxHandler }) {
           <td >Debit</td>
           <td >Credit</td>
           <td >Amount</td>
-          <td />
+          <td >Manage</td>
         </tr>
         {
           data.map((tx, index) => {
@@ -84,8 +96,12 @@ export function TxTable ({ data, deleteTxHandler, updateTxHandler }) {
                 <td className='text-center' data-testid={makeDataTestId(id, 'credit')}>{credit ? 'X' : ''}</td>
                 <td data-testid={makeDataTestId(id, 'amount')}>${(amount / 100).toFixed(2)}</td>
                 <td className='tx-action-btns'>
-                  <Button clickHandler={updateTx} color='grey' text='U' />
-                  <Button clickHandler={deleteTx} color='danger' text='X' />
+                  <button onClick={updateTx}>
+                    <img alt='update transaction' src={EditSvg} />
+                  </button>
+                  <button className='delete' onClick={deleteTx}>
+                    <img alt='update transaction' src={DeleteSvg} />
+                  </button>
                 </td>
               </tr>
             )

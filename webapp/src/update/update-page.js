@@ -54,11 +54,13 @@ export function Update (props) {
   return (
     <Fragment>
       <div css={styles}>
-        <TxForm
-          cancelHandler={cancelHandler}
-          submitHandler={submitHandler}
-          tx={txToUpdate}
-        />
+        <div className='card'>
+          <TxForm
+            cancelHandler={cancelHandler}
+            submitHandler={submitHandler}
+            tx={txToUpdate}
+          />
+        </div>
       </div>
     </Fragment>
   )

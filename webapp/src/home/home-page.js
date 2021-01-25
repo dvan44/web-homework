@@ -65,18 +65,22 @@ export function Home (props) {
     <Fragment>
       <div css={pageStyles}>
         <div css={styles}>
-          <div className='title'>Transactions</div>
+          <div>
+            <div className='title text-secondary'>Transactions</div>
+          </div>
           <Button
             clickHandler={handleEnterClicked}
-            color='tertiary'
+            color='primary'
             text='Enter New Transaction'
           />
         </div>
-        <TxTable
-          data={data.transactions}
-          deleteTxHandler={deleteTxHandler}
-          updateTxHandler={updateTxHandler}
-        />
+        <div className='card'>
+          <TxTable
+            data={data.transactions}
+            deleteTxHandler={deleteTxHandler}
+            updateTxHandler={updateTxHandler}
+          />
+        </div>
       </div>
     </Fragment>
   )

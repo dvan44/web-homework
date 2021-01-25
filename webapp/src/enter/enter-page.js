@@ -46,10 +46,12 @@ export function Enter (props) {
 
   return (
     <div css={styles}>
-      <TxForm
-        cancelHandler={cancelHandler}
-        submitHandler={submitHandler}
-      />
+      <div className='card'>
+        <TxForm
+          cancelHandler={cancelHandler}
+          submitHandler={submitHandler}
+        />
+      </div>
     </div>
   )
 }

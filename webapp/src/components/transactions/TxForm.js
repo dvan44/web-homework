@@ -11,6 +11,10 @@ const styles = css`
     margin-top: 16px;
   }
 
+  .tx-id {
+    margin-bottom: 16px;
+  }
+
   .form-control-label {
     font-size: 14px;
     color: ${COLORS.primary};
@@ -76,6 +80,17 @@ export function TxForm ({ cancelHandler, submitHandler, tx = null }) {
   return (
     <form css={styles} onSubmit={onSubmit}>
 
+      {
+        tx
+          ? (
+            <div className='tx-id'>
+              <div className='form-control-label'>Transaction ID</div>
+              <div>{tx.id}</div>
+            </div>
+          )
+          : null
+      }
+
       <div>
         <label className='form-control-label'>
           Description
@@ -133,7 +148,7 @@ export function TxForm ({ cancelHandler, submitHandler, tx = null }) {
           type='button'
         />
         <Button
-          color='secondary'
+          color='primary'
           text='Save'
           type='submit'
         />

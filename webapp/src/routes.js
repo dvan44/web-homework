@@ -4,6 +4,8 @@ import { css } from '@emotion/core'
 import { Home } from './home'
 import { Enter } from './enter'
 import { Update } from './update'
+// import BackgroundSvg from './assets/background.svg'
+import { COLORS } from './theme/colors'
 
 function AppRouter () {
   return (
@@ -19,8 +21,9 @@ function AppRouter () {
             </li>
           </ul>
         </nav>
-        {/* <div className='banner' />
-        <div className='phase1' style={{ backgroundImage: 'url(' + require('./assets/background.svg') + ')' }} /> */}
+        {/* <div className='banner'>
+          <img alt='background' src={BackgroundSvg} />
+        </div> */}
         <div className='main-content' css={contentStyle}>
           <Route component={Home} exact path='/' />
           <Route component={() => (<div>Content for /another route</div>)} exact path='/another' />
@@ -40,20 +43,24 @@ const layoutStyle = css`
     padding: 8px;
 
     // .banner {
-    //   background-image: url('/assets/background.svg');
-    //   height: 400px;
-    //   width: 100%;
+    //   position: fixed;
+    //   left: 0;
+    //   right: 0;
+    //   z-index: -10;
+    //   height: 500px;
+    //   width: 100vw;
+    //   overflow: hidden;
     // }
 `
 
 const navStyle = css`
   display: flex;
-  background: #00a2ff;
+  background: ${COLORS.secondary};
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  padding: 16px;
+  padding: 16px 48px;
 
   & > ul {
       display: flex;
@@ -66,7 +73,7 @@ const navStyle = css`
     text-decoration: none;
 
     &:hover {
-      color: black;
+      color: ${COLORS.primary};
     }
   }
   
