@@ -4,17 +4,17 @@ import { css } from '@emotion/core'
 import { COLORS } from '../../theme/colors'
 import EditSvg from '../../assets/edit.svg'
 import DeleteSvg from '../../assets/delete.svg'
+import { TxType } from '../transactions/transaction-type'
 
 const styles = css`
   width: 100%;
 
   .header {
-    background: ${COLORS.darkGray};
+    font-weight: bold;
 
     td {
       padding: 5px;
       text-align: center;
-      color: white;
     }
   }
 
@@ -24,6 +24,10 @@ const styles = css`
 
   .row-highlight {
     background: ${COLORS.lightGray}
+  }
+
+  .indicator-header {
+    background: white;
   }
 `
 
@@ -61,11 +65,16 @@ const dataStyles = css`
 
 const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionId}-${fieldName}`
 
+const getIndicatorClassName = (description) => {
+  return `${Object.values(TxType).indexOf(description) >= 0 ? description : TxType.other}`
+}
+
 export function TxTable ({ data, deleteTxHandler, updateTxHandler }) {
   return (
     <table css={styles}>
       <tbody>
         <tr className='header'>
+          <td className='indicator-header' />
           <td >ID</td>
           <td >User ID</td>
           <td >Description</td>
@@ -88,12 +97,13 @@ export function TxTable ({ data, deleteTxHandler, updateTxHandler }) {
                 data-testid={`transaction-${id}`}
                 key={`transaction-${id}`}
               >
+                <td className={getIndicatorClassName(description)} />
                 <td className='truncate' data-testid={makeDataTestId(id, 'id')}>{id}</td>
                 <td className='truncate' data-testid={makeDataTestId(id, 'userId')}>{userId}</td>
                 <td data-testid={makeDataTestId(id, 'description')}>{description}</td>
                 <td className='truncate' data-testid={makeDataTestId(id, 'merchant')}>{merchantId}</td>
-                <td className='text-center' data-testid={makeDataTestId(id, 'debit')}>{debit ? 'X' : ''}</td>
-                <td className='text-center' data-testid={makeDataTestId(id, 'credit')}>{credit ? 'X' : ''}</td>
+                <td className='text-center' data-testid={makeDataTestId(id, 'debit')}>{debit ? (<span>&#10003;</span>) : ''}</td>
+                <td className='text-center' data-testid={makeDataTestId(id, 'credit')}>{credit ? (<span>&#10003;</span>) : ''}</td>
                 <td data-testid={makeDataTestId(id, 'amount')}>${(amount / 100).toFixed(2)}</td>
                 <td className='tx-action-btns'>
                   <button onClick={updateTx}>

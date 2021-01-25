@@ -3,6 +3,7 @@ import { bool, func, number, shape, string } from 'prop-types'
 import { css } from '@emotion/core'
 import { Button } from '../button/Button'
 import { COLORS } from '../../theme/colors'
+import { TxType } from './transaction-type'
 
 const styles = css`
   width: 100%;
@@ -95,14 +96,20 @@ export function TxForm ({ cancelHandler, submitHandler, tx = null }) {
         <label className='form-control-label'>
           Description
           <div className='form-control-container'>
-            <input
+            <select
               className='form-control'
-              maxLength='50'
-              placeholder='Description'
               ref={descriptionInput}
               required
-              type='text'
-            />
+            >
+              <option disabled selected value=''>Select description</option>
+              <option value={TxType.auto}>{TxType.auto}</option>
+              <option value={TxType.education}>{TxType.education}</option>
+              <option value={TxType.entertainment}>{TxType.entertainment}</option>
+              <option value={TxType.food}>{TxType.food}</option>
+              <option value={TxType.housing}>{TxType.housing}</option>
+              <option value={TxType.other}>{TxType.other}</option>
+              <option value={TxType.subscriptions}>{TxType.subscriptions}</option>
+            </select>
           </div>
         </label>
       </div>
@@ -132,7 +139,7 @@ export function TxForm ({ cancelHandler, submitHandler, tx = null }) {
               ref={typeInput}
               required
             >
-              <option defaultValue disabled value=''>Transaction Type</option>
+              <option disabled selected value=''>Transaction Type</option>
               <option value='Credit'>Credit</option>
               <option value='Debit'>Debit</option>
             </select>

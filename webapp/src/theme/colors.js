@@ -7,5 +7,10 @@ export const COLORS = {
   grey: '#999999',
   darkGray: '#454545',
   white: '#fff',
-  black: '#000'
+  black: '#000',
+  green: '#2ded43',
+  orange: '#ed7300',
+  red: '#ed2c28',
+  purple: '#aa2ded',
+  pink: '#ed2dc0'
 }

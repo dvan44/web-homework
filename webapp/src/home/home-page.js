@@ -71,7 +71,7 @@ export function Home (props) {
           <Button
             clickHandler={handleEnterClicked}
             color='primary'
-            text='Enter New Transaction'
+            text='Add Transaction'
           />
         </div>
         <div className='card'>
