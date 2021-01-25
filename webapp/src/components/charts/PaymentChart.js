@@ -1,17 +1,18 @@
 import React from 'react'
 import { css } from '@emotion/core'
 import { Doughnut } from 'react-chartjs-2'
-import { TxType, txTypeToColor } from '../transactions/transaction-type'
 import { arrayOf, bool, number, shape, string } from 'prop-types'
+import { COLORS } from '../../theme/colors'
 
 const styles = css`
 `
 
-const txTypes = Object.values(TxType)
+const paymentTypes = ['Credit', 'Debit']
 
-export function TxChart ({ transactions }) {
-  const chartData = txTypes.map(type => {
-    const filteredTxs = transactions.filter(tx => tx.description === type)
+export function PaymentChart ({ transactions }) {
+  const chartData = paymentTypes.map(type => {
+    const credit = type === 'Credit'
+    const filteredTxs = transactions.filter(tx => credit ? tx.credit : tx.debit)
     const typeSum = filteredTxs.reduce(
       (sum, tx) => sum + (tx.amount / 100),
       0
@@ -20,10 +21,10 @@ export function TxChart ({ transactions }) {
   })
 
   const data = {
-    labels: Object.values(TxType),
+    labels: paymentTypes,
     datasets: [{
       label: 'Test',
-      backgroundColor: txTypes.map(type => txTypeToColor(type)),
+      backgroundColor: [COLORS.primary, COLORS.secondary],
       data: chartData
     }]
   }
@@ -41,7 +42,7 @@ export function TxChart ({ transactions }) {
   )
 }
 
-TxChart.propTypes = {
+PaymentChart.propTypes = {
   transactions: arrayOf(shape({
     id: string,
     user_id: string,

@@ -56,7 +56,7 @@ export function Home (props) {
   if (error) {
     return (
       <Fragment>
-        ¯\_(ツ)_/¯
+        Sorry, something went wrong. Please refresh the page to try again.
       </Fragment>
     )
   }

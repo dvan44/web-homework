@@ -121,7 +121,7 @@ export function TxForm ({ cancelHandler, submitHandler, tx = null }) {
             <input
               className='form-control'
               pattern='^\d+\.\d{2}$'
-              placeholder='0'
+              placeholder='0.00'
               ref={amountInput}
               required
               type='text'

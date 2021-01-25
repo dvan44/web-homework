@@ -2,12 +2,29 @@ import { css } from '@emotion/core'
 import { COLORS } from './colors'
 import { TxType, txTypeToColor } from '../components/transactions/transaction-type'
 
+// Dynamically build all classes needed for the different transaction types
+const txTypeClasses = () => {
+  let classes = ''
+  Object.values(TxType).forEach(type => {
+    classes += `.${type} { background: ${txTypeToColor(type)}; }\n`
+  })
+  return classes
+}
+
 // Global styles
 export const styles = css`
   * {
     color: ${COLORS.darkGray};
     font-family: Verdana, sans-serif;
     font-size: 16px;
+  }
+
+  .bold {
+    font-weight: bold;
+  }
+
+  .text-center {
+    text-align: center;
   }
 
   .text-primary {
@@ -29,25 +46,5 @@ export const styles = css`
     box-shadow: 0 5px 10px 2px ${COLORS.grey};
   }
 
-  .${TxType.auto} {
-    background: ${txTypeToColor(TxType.auto)};
-  }
-  .${TxType.education} {
-    background: ${txTypeToColor(TxType.education)};
-  }
-  .${TxType.entertainment} {
-    background: ${txTypeToColor(TxType.entertainment)};
-  }
-  .${TxType.food} {
-    background: ${txTypeToColor(TxType.food)};
-  }
-  .Housing {
-    background: ${txTypeToColor(TxType.housing)};
-  }
-  .${TxType.other} {
-    background: ${txTypeToColor(TxType.other)};
-  }
-  .${TxType.subscriptions} {
-    background: ${txTypeToColor(TxType.subscriptions)};
-  }
+  ${txTypeClasses()}
 `
