@@ -1,5 +1,5 @@
 mutation CreateTransaction(
-    $amount: Int,
+    $amount: Float,
     $credit: Boolean,
     $debit: Boolean,
     $description: String,

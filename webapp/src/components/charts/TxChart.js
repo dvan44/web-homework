@@ -13,7 +13,7 @@ export function TxChart ({ transactions }) {
   const chartData = txTypes.map(type => {
     const filteredTxs = transactions.filter(tx => tx.description === type)
     const typeSum = filteredTxs.reduce(
-      (sum, tx) => sum + (tx.amount / 100),
+      (sum, tx) => sum + tx.amount,
       0
     )
     return typeSum.toFixed(2)

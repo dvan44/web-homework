@@ -107,7 +107,7 @@ export function TxTable ({ data, deleteTxHandler, updateTxHandler }) {
                 <td className='text-center' data-testid={makeDataTestId(id, 'credit')}>{credit ? (<span>&#10003;</span>) : ''}</td>
                 <td data-testid={makeDataTestId(id, 'amount')}>
                   <span>$</span>
-                  <Num number={(amount / 100).toFixed(2)} />
+                  <Num number={amount.toFixed(2)} />
                 </td>
                 <td className='tx-action-btns'>
                   <button onClick={updateTx}>

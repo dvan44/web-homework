@@ -14,7 +14,7 @@ export function PaymentChart ({ transactions }) {
     const credit = type === 'Credit'
     const filteredTxs = transactions.filter(tx => credit ? tx.credit : tx.debit)
     const typeSum = filteredTxs.reduce(
-      (sum, tx) => sum + (tx.amount / 100),
+      (sum, tx) => sum + tx.amount,
       0
     )
     return typeSum.toFixed(2)

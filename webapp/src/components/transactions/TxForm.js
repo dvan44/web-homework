@@ -59,7 +59,7 @@ export function TxForm ({ cancelHandler, submitHandler, tx = null }) {
 
   useEffect(() => {
     if (tx) {
-      amountInput.current.value = (tx.amount / 100).toFixed(2)
+      amountInput.current.value = tx.amount
       descriptionInput.current.value = tx.description
       typeInput.current.value = tx.credit ? 'Credit' : (tx.debit ? 'Debit' : '')
     }
@@ -69,7 +69,7 @@ export function TxForm ({ cancelHandler, submitHandler, tx = null }) {
     e.preventDefault()
     submitHandler({
       ...tx,
-      amount: Math.floor(amountInput.current.value * 100),
+      amount: parseFloat(amountInput.current.value),
       credit: typeInput.current.value === 'Credit',
       debit: typeInput.current.value === 'Debit',
       description: descriptionInput.current.value,
