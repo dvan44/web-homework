@@ -22,7 +22,6 @@ export function TxChart ({ transactions }) {
   const data = {
     labels: Object.values(TxType),
     datasets: [{
-      label: 'Test',
       backgroundColor: txTypes.map(type => txTypeToColor(type)),
       data: chartData
     }]

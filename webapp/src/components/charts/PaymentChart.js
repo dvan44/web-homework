@@ -1,6 +1,6 @@
 import React from 'react'
 import { css } from '@emotion/core'
-import { Doughnut } from 'react-chartjs-2'
+import { Bar } from 'react-chartjs-2'
 import { arrayOf, bool, number, shape, string } from 'prop-types'
 import { COLORS } from '../../theme/colors'
 
@@ -23,7 +23,6 @@ export function PaymentChart ({ transactions }) {
   const data = {
     labels: paymentTypes,
     datasets: [{
-      label: 'Test',
       backgroundColor: [COLORS.primary, COLORS.secondary],
       data: chartData
     }]
@@ -31,13 +30,20 @@ export function PaymentChart ({ transactions }) {
 
   const options = {
     legend: {
-      position: 'right'
+      display: false
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          beginAtZero: true
+        }
+      }]
     }
   }
 
   return (
     <div css={styles}>
-      <Doughnut data={data} options={options} />
+      <Bar data={data} options={options} />
     </div>
   )
 }
