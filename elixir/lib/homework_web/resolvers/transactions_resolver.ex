@@ -7,7 +7,11 @@ defmodule HomeworkWeb.Resolvers.TransactionsResolver do
   Get a list of transcations
   """
   def transactions(_root, args, _info) do
-    {:ok, Transactions.list_transactions(args)}
+    {
+      :ok,
+      Transactions.list_transactions(args)
+      |> Enum.map(fn (tx) -> %{tx | amount: tx.amount / 100} end)
+    }
   end
 
   @doc """
@@ -27,10 +31,11 @@ defmodule HomeworkWeb.Resolvers.TransactionsResolver do
   @doc """
   Create a new transaction
   """
-  def create_transaction(_root, args, _info) do
+  def create_transaction(_root, %{amount: amount} = args, _info) do
+    args = %{args | amount: trunc(amount * 100)}
     case Transactions.create_transaction(args) do
       {:ok, transaction} ->
-        {:ok, transaction}
+        {:ok, %{transaction | amount: transaction.amount / 100} }
 
       error ->
         {:error, "could not create transaction: #{inspect(error)}"}
@@ -40,12 +45,13 @@ defmodule HomeworkWeb.Resolvers.TransactionsResolver do
   @doc """
   Updates a transaction for an id with args specified.
   """
-  def update_transaction(_root, %{id: id} = args, _info) do
+  def update_transaction(_root, %{id: id, amount: amount} = args, _info) do
     transaction = Transactions.get_transaction!(id)
 
+    args = %{args | amount: trunc(amount * 100)}
     case Transactions.update_transaction(transaction, args) do
       {:ok, transaction} ->
-        {:ok, transaction}
+        {:ok, %{transaction | amount: transaction.amount / 100} }
 
       error ->
         {:error, "could not update transaction: #{inspect(error)}"}
@@ -60,7 +66,7 @@ defmodule HomeworkWeb.Resolvers.TransactionsResolver do
 
     case Transactions.delete_transaction(transaction) do
       {:ok, transaction} ->
-        {:ok, transaction}
+        {:ok, %{transaction | amount: transaction.amount / 100} }
 
       error ->
         {:error, "could not update transaction: #{inspect(error)}"}
