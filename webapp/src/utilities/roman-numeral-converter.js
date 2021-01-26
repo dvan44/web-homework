@@ -5,7 +5,7 @@
  * @param {*} num
  */
 export const numberToRoman = (num) => {
-  if (num <= 0) {
+  if (isNaN(num) || num <= 0) {
     return ''
   }
 
